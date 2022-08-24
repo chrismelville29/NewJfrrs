@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Player Search</title>
+        <meta charset="UTF-8">
+        <meta name = "username" content = {{username}}>
+        <link rel="stylesheet" href="../static/general.css">
+        <script type="text/javascript" src="../static/manager_home.js"></script>
+    </head>
+
+    <body>
+        <p><a href="/">Home</a></p>
+
+        <h4>What is up, {{username}}?</h4>
+
+        <div id="two_thirds_block" class="default_text">
+            <p><table id="leagues_table" class = "results_table"></table></p>
+
+        </div>
+
+        <div id = "one_third_block">
+
+          <h4 class="default_text">Join a New League</h4>
+
+          <p>League Name:<input id="league_name_input"></input></p>
+          <p><button id="league_join_button">Join League</button></p>
+          <p id="error_message"></p>
+
+        </div>
+
+    </body>
+</html>
