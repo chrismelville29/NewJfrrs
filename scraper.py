@@ -130,6 +130,8 @@ class Athlete:
 
     def regularize_time(self, time):
         mins_seconds = time.split(':')
+        if(len(mins_seconds) == 1):
+            return round(float(mins_seconds[0]),2)
         return round(60*float(mins_seconds[0])+float(mins_seconds[1]),2)
 
 
@@ -182,11 +184,11 @@ class Athlete:
         for i in range(1, table_length, 2):
             row_tag_contents = table_tag_contents[i].contents
             for j in range(2):
-                if(athletenumber == 28):
-                    print(str(row_tag_contents))
                 distance_tag = row_tag_contents[8*j+3]
                 pr = self.create_pr(distance_tag)
                 if pr == None:
+                    #if self.name == "Josh Meier":
+                        #print("Uh oh")
                     break
                 prs.append(pr)
         return prs
@@ -195,10 +197,15 @@ class Athlete:
         distance = distance_tag.text.strip().replace('\n','').replace(' ','')
         try:
             time_tag = distance_tag.next_sibling.next_sibling.contents[1]
+            #if self.name == "Josh Meier" and distance == "200":
+              #  print(time_tag)
             time = time_tag.contents[1].text.strip()
             return {'distance':distance,
             'time':self.regularize_time(time)}
         except:
+            #if self.name == "Josh Meier":
+                #print(str(distance_tag))
+                #print("That was jms distance tag")
             return None
 
     def create_relevant_prs(self, prs):
@@ -223,4 +230,4 @@ def write_conference(id, sex):
 
 
 write_conference('1408','m')
-write_conference('1408','f')
+#write_conference('1408','f')

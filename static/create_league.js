@@ -1,3 +1,5 @@
+let username = document.getElementsByName('username')[0].content;
+
 function initialize() {
     document.getElementById('conference_selector').innerHTML = getConferenceSelectorHTML();
 
@@ -27,8 +29,9 @@ function onCreateButton() {
 
     let amePost = {method: 'post',
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({name: leagueName,
-    conference: conference})};
+    body: JSON.stringify({name: leagueName.replaceAll(" ","_"),
+    conference: conference,
+    creator: username})};
 
     fetch(url, amePost)
 
@@ -36,16 +39,18 @@ function onCreateButton() {
 
     .then(function(wasAdded) {
         if(wasAdded['status'] == 'distinct') {
-            errorMessage.innerHTML = "You've successfully added league'"+leagueName+"'";
-            return;
+            errorMessage.innerHTML = "You've successfully added league '"+leagueName+"'";
+        let link = getBaseURL() + '/league_home/'+leagueName.replaceAll(" ","_")+'/'+username;
+        window.location.assign(link);
         }
-        errorMessage.innerHTML = "Username '"+ leagueName+ "' is already taken. sorry";
+        errorMessage.innerHTML = "League name '"+ leagueName+ "' is already taken. sorry";
     })
 
     .catch(function(error) {
         console.log(error);
     });
 }
+
 
 
 

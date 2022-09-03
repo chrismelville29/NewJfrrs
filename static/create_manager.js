@@ -6,7 +6,7 @@ function initialize() {
 window.onload = initialize;
 
 function onCreateButton() {
-    let username = document.getElementById('username_input').value;
+    let username = document.getElementById('username_input').value.replaceAll(" ","_");
     let password = document.getElementById('password_input').value;
     let errorMessage = document.getElementById('error_message');
     if(username == "" || password == "") {

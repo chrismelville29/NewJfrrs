@@ -2,6 +2,7 @@ let username = document.getElementsByName('username')[0].content;
 
 function initialize() {
     loadTable();
+    createLeagueLink();
 
     let joinButton = document.getElementById('league_join_button');
     joinButton.onclick = onJoinButton;
@@ -9,7 +10,7 @@ function initialize() {
 
 function loadTable() {
 
-  let url = getBaseURL() + '/api/leagues/' + username;
+  let url = getBaseURL() + '/api/managers/' + username;
 
   fetch(url, {method: 'get'})
 
@@ -26,16 +27,16 @@ function loadTable() {
 }
 
 function createTableHTML(leagues) {
-    tableHTML = "<tr><th>League</th><th>Conference</th></tr>";
+    let tableHTML = "<tr><th>League</th><th>Conference</th></tr>";
     for(league in leagues) {
-        tableHTML+="<tr><td>"+league+"</td><td>"+leagues[league]+"</td></tr>"
+        let linkTag = "<a href ='/league_home/"+league+"/"+username+"'>"+league.replaceAll("_"," ")+"</a>";
+        tableHTML+="<tr><td>"+linkTag+"</td><td>"+leagues[league]+"</td></tr>"
     }
     return tableHTML+"<tr><td>&nbsp;</td><td></td></tr>";
 }
 
 function onJoinButton() {
-    let errorMessage = document.getElementById('error_message');
-    let leagueName = document.getElementById('league_name_input').value;
+    let leagueName = document.getElementById('join_league_name_input').value.replaceAll(" ","_");
     let url = getBaseURL() + '/api/join_league';
     let joinLeaguePost = {method: 'post',
     headers: {"Content-Type": "application/json"},
@@ -55,7 +56,9 @@ function onJoinButton() {
     });
 }
 
+
 function joinLeague(status, leagueName) {
+    let errorMessage = document.getElementById('error_message');
     if(status == 'league_not_found') {
         errorMessage.innerHTML = 'League '+leagueName+' was not found.';
         return;
@@ -66,6 +69,12 @@ function joinLeague(status, leagueName) {
     errorMessage.innerHTML = "You're already in league "+leagueName+'.';
 
 }
+
+function createLeagueLink() {
+    let createLink = document.getElementById('create_league_link');
+    createLink.innerHTML = "<a href = '/create_league/"+username+"'>Create League</a>";
+}
+
 
 
 function getBaseURL() {

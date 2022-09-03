@@ -26,7 +26,7 @@ class League:
 
         print('creating manager '+name)
 
-    def get_json():
+    def get_json(self):
         return {'name':self.name,
         'managers':self.managers,
         'weeks':self.weeks}
